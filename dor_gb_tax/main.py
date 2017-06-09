@@ -57,10 +57,10 @@ def output_file(data):
         for field_name in FIELDS:
             sh.write(x, y, field_name)
             y += 1
-        for col_data in data[sheet_name]:
+        for row in data[sheet_name]:
             y = 0
             x += 1
-            for cell in col_data:
+            for cell in row:
                 sh.write(x, y, cell)
                 y += 1
 
