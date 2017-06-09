@@ -26,19 +26,29 @@ def process_data(files):
     object of lists for each sheet name in SHEETS. For each file opened, append
     each row's data to the appropriate sheet.
     """
+    # Initialize data preset
     data = {x: [] for x in SHEETS}
     for file_name in files:
+        # Open the file
         wb = open_workbook(file_name)
+        # Access the sheet
         sh = wb.sheet_by_index(0)
         for sheet in SHEETS:
             x = SHEETS.index(sheet)
+            # Build row of data for the month
             data[sheet].append([
+                # Date of Sale (month-day-year)
                 file_name.split('.')[0],
+                # Amount Sold
                 sh.cell_value(rowx=x + 1, colx=3),
+                # Exempt Amount Sold
                 sh.cell_value(rowx=x + 1, colx=1),
+                # Total Sales
                 float(sh.cell_value(rowx=x + 1, colx=2)) +
                 float(sh.cell_value(rowx=x + 1, colx=4)),
+                # Tax-Exempt Sales
                 sh.cell_value(rowx=x + 1, colx=2),
+                # Taxable Sales
                 sh.cell_value(rowx=x + 1, colx=4),
             ])
     return(data)
@@ -49,17 +59,22 @@ def output_file(data):
     With the dict of lists from process_data, create a sheet for each value in
     SHEETS. Then fill the data in from each row before creating the next sheet.
     """
+    # Open new workbook
     wb = Workbook()
     for sheet_name in SHEETS:
+        # Create new sheet with the appropriate label
         sh = wb.add_sheet(sheet_name)
 
         x, y = 0, 0
+        # Write headers
         for field_name in FIELDS:
             sh.write(x, y, field_name)
             y += 1
+        # Write data
         for row in data[sheet_name]:
             y = 0
             x += 1
+            # Write cells
             for cell in row:
                 sh.write(x, y, cell)
                 y += 1
