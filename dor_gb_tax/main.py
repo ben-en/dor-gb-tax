@@ -31,14 +31,14 @@ def process_data(files):
     each row's data to the appropriate sheet.
     """
     # Initialize data preset
-    data = {q: {s: [] for s in SHEETS} for q in QUARTER_STRINGS}
+    data = {q: {s: [] for s in SHEETS} for q in range(1, 5)}
     for file_name in files:
         # Open the file
         wb = open_workbook(file_name)
         # Access the sheet
         sh = wb.sheet_by_index(0)
         for sheet in SHEETS:
-            q = QUARTERS[file_name.split('-')[0]]
+            q = QUARTERS[int(file_name.split('-')[0])]
             x = SHEETS.index(sheet)
             # Build row of data for the month
             data[q][sheet].append([
@@ -65,8 +65,11 @@ def output_data(data):
     SHEETS. Then fill the data in from each row before creating the next sheet.
     """
     # Open new workbook
-    wb = Workbook()
     for q, quarter_data in data.items():
+        if len(quarter_data[SHEETS[0]]) == 0:
+            print('No data for ' + QUARTER_STRINGS[q - 1] + ' quarter')
+            continue
+        wb = Workbook()
         for sheet_name in SHEETS:
             # Create new sheet with the appropriate label
             sh = wb.add_sheet(sheet_name)
@@ -84,7 +87,7 @@ def output_data(data):
                 for cell in row:
                     sh.write(x, y, cell)
                     y += 1
-        wb.save(q + '-Quarter.xls')
+        wb.save(QUARTER_STRINGS[q - 1] + '-Quarter.xls')
 
 
 def set_args():
