@@ -19,13 +19,14 @@ This rough guide assumes that you'll be running the script on a linux computer t
  
   2) For each month, create a Monthly Tax Report from the first day to the last day of the month. As you download each file rename it to a day of the month, for example my report for March was renamed `3-1-17.xlsx`.
 
-  3) Put all files desired in the quarter in one folder.
+  3) Put all files desired into one folder.
 
   4) On a windows computer open each file and save a copy to XLS format. <- Extremely critical step.
 
   5) Send the files to the linux computer (i used email)
 
-  6) Run the script on the files all in the same folder.
+  6) Run the script on the files all in the same folder. This will generate
+  output for all quarters you've provided months for.
 
 ```
       ┌──(0) ben [~/code/tax-conversion/dor_gb_tax/example]
@@ -33,10 +34,11 @@ This rough guide assumes that you'll be running the script on a linux computer t
       3-1-17.xls  4-1-17.xls  5-1-17.xls
 
       ┌──(0) ben [~/code/tax-conversion/dor_gb_tax/example]
-      └╼ dor-gb-tax 3-1-17.xls; mv output.xls 1st-q.xls
+      └╼ dor-gb-tax 3-1-17.xls 4-1-17.xls 5-1-17.xls
 
       ┌──(0) ben [~/code/tax-conversion/dor_gb_tax/example]
-      └╼ dor-gb-tax 4-1-17.xls 5-1-17.xls; mv output.xls 2st-q.xls
+      └╼ ls
+      1st-Quarter.xls  2nd-Quarter.xls  3-1-17.xls       4-1-17.xls       5-1-17.xls
 ```
 
-  5) Send the output files back to the windows computer and save a copy to xlsx. This is equally important to the first time, as the DoR website requires xlsx.
+  7) Send the output files back to the windows computer and save a copy to xlsx. This is equally important to the first time, as the DoR website requires xlsx.
