@@ -9,6 +9,10 @@ SHEETS = ['Leaves', 'Flowers', 'Immature Plants', 'Edibles', 'Concentrates',
 FIELDS = ['Date of Sale', 'Amount Sold', 'Exempt Amount Sold', 'Total Sales',
           'Tax-Exempt Sales', 'Taxable Sales']
 
+QUARTERS = {1: 1, 2: 1, 3: 1, 4: 2, 5: 2, 6: 2, 7: 3, 8: 3, 9: 3, 10: 4, 11: 4,
+            12: 4}
+QUARTER_STRINGS = ['1st', '2nd', '3rd', '4th']
+
 
 def main():
     """
@@ -27,16 +31,17 @@ def process_data(files):
     each row's data to the appropriate sheet.
     """
     # Initialize data preset
-    data = {x: [] for x in SHEETS}
+    data = {q: {s: [] for s in SHEETS} for q in QUARTER_STRINGS}
     for file_name in files:
         # Open the file
         wb = open_workbook(file_name)
         # Access the sheet
         sh = wb.sheet_by_index(0)
         for sheet in SHEETS:
+            q = QUARTERS[file_name.split('-')[0]]
             x = SHEETS.index(sheet)
             # Build row of data for the month
-            data[sheet].append([
+            data[q][sheet].append([
                 # Date of Sale (month-day-year)
                 file_name.split('.')[0],
                 # Amount Sold
@@ -61,25 +66,25 @@ def output_data(data):
     """
     # Open new workbook
     wb = Workbook()
-    for sheet_name in SHEETS:
-        # Create new sheet with the appropriate label
-        sh = wb.add_sheet(sheet_name)
+    for q, quarter_data in data.items():
+        for sheet_name in SHEETS:
+            # Create new sheet with the appropriate label
+            sh = wb.add_sheet(sheet_name)
 
-        x, y = 0, 0
-        # Write headers
-        for field_name in FIELDS:
-            sh.write(x, y, field_name)
-            y += 1
-        # Write data
-        for row in data[sheet_name]:
-            y = 0
-            x += 1
-            # Write cells
-            for cell in row:
-                sh.write(x, y, cell)
+            x, y = 0, 0
+            # Write headers
+            for field_name in FIELDS:
+                sh.write(x, y, field_name)
                 y += 1
-
-    wb.save('output.xls')
+            # Write data
+            for row in quarter_data[sheet_name]:
+                y = 0
+                x += 1
+                # Write cells
+                for cell in row:
+                    sh.write(x, y, cell)
+                    y += 1
+        wb.save(q + '-Quarter.xls')
 
 
 def set_args():
