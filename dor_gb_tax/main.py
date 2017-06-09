@@ -31,16 +31,17 @@ def process_data(files):
     each row's data to the appropriate sheet.
     """
     # Initialize data preset
-    data = {x: [] for x in SHEETS}
+    data = {q: {s: [] for s in SHEETS} for q in QUARTER_STRINGS}
     for file_name in files:
         # Open the file
         wb = open_workbook(file_name)
         # Access the sheet
         sh = wb.sheet_by_index(0)
         for sheet in SHEETS:
+            q = QUARTERS[file_name.split('-')[0]]
             x = SHEETS.index(sheet)
             # Build row of data for the month
-            data[sheet].append([
+            data[q][sheet].append([
                 # Date of Sale (month-day-year)
                 file_name.split('.')[0],
                 # Amount Sold
