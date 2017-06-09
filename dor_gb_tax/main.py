@@ -36,8 +36,8 @@ def process_data(files):
                 file_name.split('.')[0],
                 sh.cell_value(rowx=x + 1, colx=3),
                 sh.cell_value(rowx=x + 1, colx=1),
-                sh.cell_value(rowx=x + 1, colx=2) + sh.cell_value(
-                    rowx=x + 1, colx=4),
+                float(sh.cell_value(rowx=x + 1, colx=2)) +
+                float(sh.cell_value(rowx=x + 1, colx=4)),
                 sh.cell_value(rowx=x + 1, colx=2),
                 sh.cell_value(rowx=x + 1, colx=4),
             ])
