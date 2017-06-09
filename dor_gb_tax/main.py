@@ -9,6 +9,8 @@ SHEETS = ['Leaves', 'Flowers', 'Immature Plants', 'Edibles', 'Concentrates',
 FIELDS = ['Date of Sale', 'Amount Sold', 'Exempt Amount Sold', 'Total Sales',
           'Tax-Exempt Sales', 'Taxable Sales']
 
+QUARTER_STRINGS = ['1st', '2nd', '3rd', '4th']
+
 
 def main():
     """
