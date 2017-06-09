@@ -17,7 +17,7 @@ def main():
     """
     files = set_args()
     data = process_data(files)
-    output_file(data)
+    output_data(data)
 
 
 def process_data(files):
@@ -54,7 +54,7 @@ def process_data(files):
     return(data)
 
 
-def output_file(data):
+def output_data(data):
     """
     With the dict of lists from process_data, create a sheet for each value in
     SHEETS. Then fill the data in from each row before creating the next sheet.
