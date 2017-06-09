@@ -66,25 +66,25 @@ def output_file(data):
     """
     # Open new workbook
     wb = Workbook()
-    for sheet_name in SHEETS:
-        # Create new sheet with the appropriate label
-        sh = wb.add_sheet(sheet_name)
+    for q, quarter_data in data.items():
+        for sheet_name in SHEETS:
+            # Create new sheet with the appropriate label
+            sh = wb.add_sheet(sheet_name)
 
-        x, y = 0, 0
-        # Write headers
-        for field_name in FIELDS:
-            sh.write(x, y, field_name)
-            y += 1
-        # Write data
-        for row in data[sheet_name]:
-            y = 0
-            x += 1
-            # Write cells
-            for cell in row:
-                sh.write(x, y, cell)
+            x, y = 0, 0
+            # Write headers
+            for field_name in FIELDS:
+                sh.write(x, y, field_name)
                 y += 1
-
-    wb.save('output.xls')
+            # Write data
+            for row in quarter_data[sheet_name]:
+                y = 0
+                x += 1
+                # Write cells
+                for cell in row:
+                    sh.write(x, y, cell)
+                    y += 1
+        wb.save(q + '-Quarter.xls')
 
 
 def set_args():
